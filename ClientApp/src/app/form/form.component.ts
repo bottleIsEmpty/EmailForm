@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms/src/validators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormValidators } from './form.validators';
 
 @Component({
   selector: 'app-form',
@@ -8,10 +8,34 @@ import { Validators } from '@angular/forms/src/validators';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent {
-  // form = new FormGroup({
-  //   name: new FormControl('', Validators.required),
-  //   surname: new FormControl('', Validators.required),
-  //   birthdate: new FormControl('', Validators.required),
-  //   email: new FormControl('', [Validators.required, Validators.email]),
-  // })
+  form = new FormGroup({
+    name: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(2)
+    ]),
+    surname: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(2)
+    ]),
+    birthdate: new FormControl('', [
+      Validators.required,
+      FormValidators.min18Years
+    ]),
+    email: new FormControl('', [
+      Validators.required, 
+      Validators.email
+    ]),
+  });
+
+  submit() {
+    console.log('asd');
+  }
+
+  get name() { return this.form.get('name') }
+
+  get surname() { return this.form.get('surname') }
+
+  get birthdate() { return this.form.get('birthdate') }
+
+  get email() { return this.form.get('email') }
 }

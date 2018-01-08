@@ -7,7 +7,15 @@
         type="text" 
         id="name" 
         class="form-control">
-    </div>
+        <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
+          <div *ngIf=name.errors.required>
+            Введите имя
+          </div>
+          <div *ngIf=name.errors.minlength>
+            Имя должно содержать минимум {{ name.errors.minlength.requiredLength }} символа
+          </div>
+        </div>
+        </div>
     <div class="form-group">
       <label for="surname">Фамилия:</label>
       <input
@@ -15,7 +23,14 @@
         type="text" 
         id="surname" 
         class="form-control">
-      <!-- <div *ngIf="form.get('surname').touched && form.get('surname').invalid" class="alert alert-danger">Введите фимилию</div> -->
+        <div *ngIf="surname.touched && surname.invalid" class="alert alert-danger">
+          <div *ngIf=surname.errors.required>
+            Введите фамилию
+          </div>
+          <div *ngIf=surname.errors.minlength>
+            Фамилия должна содержать минимум {{ surname.errors.minlength.requiredLength }} символа
+          </div>
+        </div>
     </div>
     <div class="form-group">
       <label for="birthdate">День рождения:</label>
@@ -24,6 +39,14 @@
         type="date" 
         id="birthdate" 
         class="form-control">
+        <div *ngIf="birthdate.touched && birthdate.invalid" class="alert alert-danger">
+          <div *ngIf=birthdate.errors.required>
+            Введите дату рождения
+          </div>
+          <div *ngIf=birthdate.errors.tooYoung>
+            Возраст должен быть не менее 18 лет
+          </div>
+        </div>
     </div>
     <div class="form-group">
       <label for="email"> E-mail:</label>
@@ -32,6 +55,14 @@
         type="email" 
         id="email" 
         class="form-control">
+        <div *ngIf="email.touched && email.invalid" class="alert alert-danger">
+          <div *ngIf=email.errors.required>
+            Введите E-mail
+          </div>
+          <div *ngIf=email.errors.email>
+            E-mail должен быть валидным
+          </div>
+        </div>
     </div>
-    <button class="btn btn-primary">Отправить</button>
+    <button (click)="submit()" [disabled]="!this.form.valid" class="btn btn-primary">Отправить</button>
   </form>
