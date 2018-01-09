@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FormValidators } from './form.validators';
+import { EmailService } from '../services/email.service';
 
 @Component({
   selector: 'app-form',
@@ -20,15 +21,32 @@ export class FormComponent {
     birthdate: new FormControl('', [
       Validators.required,
       FormValidators.min18Years
-    ]),
-    email: new FormControl('', [
+     ]),
+    emailAddress: new FormControl('', [
       Validators.required, 
       Validators.email
     ]),
   });
 
+  constructor(private service: EmailService) { }
+
   submit() {
-    console.log('asd');
+
+    //Идеальный способ, который не работает 
+    // let body = JSON.stringify(this.form.value);
+    // console.log(body);
+
+    //Костыли, но иначе не работает (почему-то)
+    let formData = new FormData();
+    formData.append("name", this.name.value);
+    formData.append("surname", this.surname.value);
+    formData.append("birthdate", this.birthdate.value);
+    formData.append("emailAddress", this.emailAddress.value);   
+
+    this.service.sendEmail(formData)
+      .subscribe(response => {
+        alert("Сообщение успешно отправлено! Проверьте почтовый ящик!");
+      });
   }
 
   get name() { return this.form.get('name') }
@@ -37,5 +55,5 @@ export class FormComponent {
 
   get birthdate() { return this.form.get('birthdate') }
 
-  get email() { return this.form.get('email') }
+  get emailAddress() { return this.form.get('emailAddress') }
 }
