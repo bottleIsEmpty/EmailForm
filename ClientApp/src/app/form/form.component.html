@@ -64,5 +64,5 @@
           </div>
         </div>
     </div>
-    <button (click)="submit()" class="btn btn-primary">Отправить</button>
+    <button [disabled]="!this.form.valid" (click)="submit()" class="btn btn-primary">Отправить</button>
   </form>

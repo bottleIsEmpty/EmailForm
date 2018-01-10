@@ -11,11 +11,11 @@ import { EmailService } from '../services/email.service';
 export class FormComponent {
   form = new FormGroup({
     name: new FormControl('', [
-      Validators.required, 
+      Validators.required,
       Validators.minLength(2)
     ]),
     surname: new FormControl('', [
-      Validators.required, 
+      Validators.required,
       Validators.minLength(2)
     ]),
     birthdate: new FormControl('', [
@@ -23,7 +23,7 @@ export class FormComponent {
       FormValidators.min18Years
      ]),
     emailAddress: new FormControl('', [
-      Validators.required, 
+      Validators.required,
       Validators.email
     ]),
   });
@@ -32,16 +32,15 @@ export class FormComponent {
 
   submit() {
 
-    //Идеальный способ, который не работает 
+    // Идеальный способ, который не работает
     // let body = JSON.stringify(this.form.value);
-    // console.log(body);
 
-    //Костыли, но иначе не работает (почему-то)
+    // Костыли, но иначе не работает (почему-то)
     let formData = new FormData();
     formData.append("name", this.name.value);
     formData.append("surname", this.surname.value);
     formData.append("birthdate", this.birthdate.value);
-    formData.append("emailAddress", this.emailAddress.value);   
+    formData.append("emailAddress", this.emailAddress.value);
 
     this.service.sendEmail(formData)
       .subscribe(response => {
@@ -49,11 +48,11 @@ export class FormComponent {
       });
   }
 
-  get name() { return this.form.get('name') }
+  get name() { return this.form.get('name'); }
 
-  get surname() { return this.form.get('surname') }
+  get surname() { return this.form.get('surname'); }
 
-  get birthdate() { return this.form.get('birthdate') }
+  get birthdate() { return this.form.get('birthdate'); }
 
-  get emailAddress() { return this.form.get('emailAddress') }
+  get emailAddress() { return this.form.get('emailAddress'); }
 }
